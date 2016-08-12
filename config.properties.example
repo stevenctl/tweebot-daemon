@@ -1,0 +1,16 @@
+#the real file should be 'config.properties'
+db.url=jdbc:mysql://mydbhost/dbname
+db.username=dbuser
+db.password=dbpass123
+db.driver-class-name=com.mysql.jdbc.Driver
+
+tier1PerDay=1
+tier2PerDay=2
+tier3PerDay=3
+
+likesPerEvent=15
+retweetsPerEvent=10
+followsPerEvent=5
+
+twitter.consumerKey=#Shhh
+twitter.secretKey=#Shhh
