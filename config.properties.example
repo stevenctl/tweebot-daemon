@@ -4,9 +4,11 @@ db.username=dbuser
 db.password=dbpass123
 db.driver-class-name=com.mysql.jdbc.Driver
 
+tiers=1,2,3
+
 tier1PerDay=1
-tier2PerDay=2
-tier3PerDay=3
+tier2PerDay=3
+tier3PerDay=10
 
 likesPerEvent=15
 retweetsPerEvent=10
