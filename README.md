@@ -18,4 +18,7 @@ I'd like to add more functionality such as:
 * setting up a tweet queue to post tweets at certain times
 * setting a zip code and radius for your account to be effective in
 * automatically sending thankyou DMs to those who follow you
+* improvements to make sure we actually like as many tweets as possible
+* performance optimizations
+
 * and more!
