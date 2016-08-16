@@ -22,6 +22,7 @@ The tweebot-api backs the UI for managing these policies.
 
 I'd like to add more functionality such as:
 
+* activity log so you can see what tweebot has done for you
 * setting up a tweet queue to post tweets at certain times
 * setting a zip code and radius for your account to be effective in
 * automatically sending thankyou DMs to those who follow you
