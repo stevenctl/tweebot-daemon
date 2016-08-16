@@ -106,4 +106,24 @@ public class TwitterService {
 
 		return new JSONObject(response.getBody());
 	}
+	
+	public JSONObject muteUser(long userId, String oauthToken, String oauthTokenSecret) {
+		String url = "https://api.twitter.com/1.1/mutes/users/create.json";
+
+		Map<String, String> params = new HashMap<>();
+
+		params.put("user_id", String.valueOf(userId));
+
+		String authHeader = requestSigner.getAuthorizationHeader(url, HttpMethod.POST, params, oauthToken,
+				oauthTokenSecret);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", authHeader);
+		headers.add(HttpHeaders.ACCEPT, "application/json");
+		HttpEntity<?> request = new HttpEntity<>(headers);
+		ResponseEntity<String> response = restTemplate.exchange(url + "?" + ParamMapper.mapToParamsUnencoded(params),
+				HttpMethod.POST, request, String.class);
+
+		return new JSONObject(response.getBody());
+	}
 }

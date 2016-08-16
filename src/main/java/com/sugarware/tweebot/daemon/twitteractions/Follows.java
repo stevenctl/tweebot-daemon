@@ -80,6 +80,11 @@ public class Follows {
 						long tweetOwnerId = Long
 								.parseLong(tweets.getJSONObject(index).getJSONObject("user").getString("id_str"));
 						twitterService.followUser(tweetOwnerId, oauthToken, oauthTokenSecret);
+						try {
+							twitterService.muteUser(tweetOwnerId, oauthToken, oauthTokenSecret);
+						} catch (Exception e) {
+							System.err.println("Couldn't mute user...");
+						}
 						successfulFollows++;
 					} catch (Exception e) {
 						System.err.println(e.getMessage() + " " + "(" + e.getStackTrace()[0].getClassName() + ":"

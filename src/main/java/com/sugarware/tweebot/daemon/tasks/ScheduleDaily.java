@@ -3,7 +3,6 @@ package com.sugarware.tweebot.daemon.tasks;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import com.sugarware.tweebot.daemon.util.PropertiesUtil;
 import com.sugarware.tweebot.daemon.util.TaskQueueUtil;

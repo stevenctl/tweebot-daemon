@@ -6,6 +6,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import com.sugarware.tweebot.daemon.cli.CommandLineReader;
+import com.sugarware.tweebot.daemon.cli.commands.Nextqueued;
 import com.sugarware.tweebot.daemon.tasks.ScheduleDaily;
 import com.sugarware.tweebot.daemon.util.PropertiesUtil;
 import com.sugarware.tweebot.daemon.util.TaskQueueUtil;
@@ -23,11 +24,13 @@ public class Scheduler {
 		dailySchedule = sch.scheduleAtFixedRate(new ScheduleDaily(), 0, 1, TimeUnit.DAYS);
 
 		int totalPerDay = PropertiesUtil.getDailyTaskCount();
+		System.out.println(totalPerDay + "/day");
 
 		// run the top of the task queue every (24/totalTasks) hours
 		periodicSchedule = sch.scheduleAtFixedRate(() -> {
 			if (TaskQueueUtil.getInstance().size() > 0) {
 				TaskQueueUtil.getInstance().remove().run();
+				new Nextqueued().execute();
 			} else {
 				System.out.println("The task queue is empty! Nothing to execute.");
 			}

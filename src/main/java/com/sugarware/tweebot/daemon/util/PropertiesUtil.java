@@ -44,7 +44,7 @@ public class PropertiesUtil {
 		String[] tierStr = props.getProperty("tiers").split(",");
 		int total = 0;
 		for (String s : tierStr) {
-			total += Integer.parseInt(s);
+			total += Integer.parseInt(props.getProperty("tier" + s + "PerDay"));
 		}
 		return total;
 	}
