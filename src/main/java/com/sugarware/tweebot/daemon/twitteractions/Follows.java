@@ -12,19 +12,22 @@ import java.util.Random;
 import org.json.JSONArray;
 
 import com.sugarware.tweebot.daemon.model.Policy;
+import com.sugarware.tweebot.daemon.service.GeocodeService;
 import com.sugarware.tweebot.daemon.service.TwitterService;
 import com.sugarware.tweebot.daemon.util.PropertiesUtil;
 
 public class Follows {
 
 	private TwitterService twitterService;
+	private GeocodeService geoService;
 	private long userId;
 	private String oauthToken;
 	private String oauthTokenSecret;
 
-	public Follows() {
+	private Follows() {
 		super();
 		twitterService = new TwitterService();
+		geoService = new GeocodeService();
 	}
 
 	public Follows(long userId, String oauthToken, String oauthTokenSecret) {
@@ -54,6 +57,18 @@ public class Follows {
 				policies.put(p, 0);
 			}
 
+			// Try to fetch geopolicy
+			String location = null;
+
+			stmt = conn.prepareStatement("SELECT * FROM geopolicy WHERE userId = ?");
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				int zip = rs.getInt("zip");
+				int radius = rs.getInt("radius");
+				location = geoService.getGeocode(zip, radius);
+			}
+
 			// Distribute follows amongst policies
 			while (follows > 0) {
 				for (Policy p : policies.keySet()) {
@@ -67,8 +82,11 @@ public class Follows {
 			// Perform the follows
 			for (Policy p : policies.keySet()) {
 
-				JSONArray tweets = twitterService.tweetQuery("#" + p.getHashtag(), oauthToken, oauthTokenSecret)
-						.getJSONArray("statuses");
+				JSONArray tweets = location != null
+						? twitterService.tweetQuery("#" + p.getHashtag(), location, oauthToken, oauthTokenSecret)
+								.getJSONArray("statuses")
+						: twitterService.tweetQuery("#" + p.getHashtag(), oauthToken, oauthTokenSecret)
+								.getJSONArray("statuses");
 
 				int successfulFollows = 0;
 				int n = policies.get(p);

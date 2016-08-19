@@ -42,7 +42,32 @@ public class TwitterService {
 
 		System.out.println("?params  =  " + ParamMapper.mapToParamsUnencoded(params));
 
-		
+		ResponseEntity<String> response = restTemplate.exchange(url + "?" + ParamMapper.mapToParamsUnencoded(params),
+				HttpMethod.GET, request, String.class);
+
+		return new JSONObject(response.getBody());
+	}
+
+	public JSONObject tweetQuery(String query, String geocode, String oauthToken, String oauthTokenSecret) {
+		String url = "https://api.twitter.com/1.1/search/tweets.json";
+
+		Map<String, String> params = new HashMap<>();
+		query = query.replace("#", "%23");
+		params.put("q", query);
+		params.put("geocode", geocode);
+		params.put("result_type", "recent");
+		params.put("count", "100");
+
+		String authHeader = requestSigner.getAuthorizationHeader(url, HttpMethod.GET, params, oauthToken,
+				oauthTokenSecret);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", authHeader);
+		headers.add(HttpHeaders.ACCEPT, "application/json");
+		HttpEntity<?> request = new HttpEntity<>(headers);
+
+		System.out.println("?params  =  " + ParamMapper.mapToParamsUnencoded(params));
+
 		ResponseEntity<String> response = restTemplate.exchange(url + "?" + ParamMapper.mapToParamsUnencoded(params),
 				HttpMethod.GET, request, String.class);
 
@@ -106,7 +131,7 @@ public class TwitterService {
 
 		return new JSONObject(response.getBody());
 	}
-	
+
 	public JSONObject muteUser(long userId, String oauthToken, String oauthTokenSecret) {
 		String url = "https://api.twitter.com/1.1/mutes/users/create.json";
 
