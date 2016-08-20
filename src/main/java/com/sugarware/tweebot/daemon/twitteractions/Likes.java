@@ -62,6 +62,7 @@ public class Likes {
 			String location = null;
 
 			stmt = conn.prepareStatement("SELECT * FROM geopolicy WHERE userId = ?");
+			stmt.setLong(1, userId);
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
