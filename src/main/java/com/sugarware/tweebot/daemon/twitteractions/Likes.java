@@ -42,7 +42,7 @@ public class Likes {
 		Properties props = PropertiesUtil.getInstance();
 		int likes = Integer.parseInt(props.getProperty("likesPerEvent"));
 		try {
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM likepolicy WHERE userId = ?");
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM LikePolicy WHERE userId = ?");
 			stmt.setLong(1, userId);
 
 			Map<Policy, Integer> policies = new HashMap<>();
@@ -58,10 +58,10 @@ public class Likes {
 				policies.put(p, 0);
 			}
 
-			// Try to fetch geopolicy
+			// Try to fetch GeoPolicy
 			String location = null;
 
-			stmt = conn.prepareStatement("SELECT * FROM geopolicy WHERE userId = ?");
+			stmt = conn.prepareStatement("SELECT * FROM GeoPolicy WHERE userId = ?");
 			stmt.setLong(1, userId);
 			rs = stmt.executeQuery();
 
@@ -105,7 +105,7 @@ public class Likes {
 				}
 
 				// update the number of likes we've done for this policy overall
-				stmt = conn.prepareStatement("UPDATE likepolicy set likes = ? where policyId = ?");
+				stmt = conn.prepareStatement("UPDATE LikePolicy set likes = ? where policyId = ?");
 				stmt.setInt(1, successfulLikes + p.getNumber());
 				stmt.setInt(2, p.getPolicyId());
 				stmt.executeUpdate();

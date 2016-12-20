@@ -41,7 +41,7 @@ public class Retweets {
 		Properties props = PropertiesUtil.getInstance();
 		int retweets = Integer.parseInt(props.getProperty("retweetsPerEvent"));
 		try {
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM retweetpolicy WHERE userId = ?");
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM RetweetPolicy WHERE userId = ?");
 			stmt.setLong(1, userId);
 
 			Map<Policy, Integer> policies = new HashMap<>();
@@ -57,10 +57,10 @@ public class Retweets {
 				policies.put(p, 0);
 			}
 
-			// Try to fetch geopolicy
+			// Try to fetch GeoPolicy
 			String location = null;
 
-			stmt = conn.prepareStatement("SELECT * FROM geopolicy WHERE userId = ?");
+			stmt = conn.prepareStatement("SELECT * FROM GeoPolicy WHERE userId = ?");
 			stmt.setLong(1, userId);
 			rs = stmt.executeQuery();
 
@@ -107,7 +107,7 @@ public class Retweets {
 
 				// update the number of retweets we've done for this policy
 				// overall
-				stmt = conn.prepareStatement("UPDATE retweetpolicy set retweets = ? where policyId = ?");
+				stmt = conn.prepareStatement("UPDATE RetweetPolicy set retweets = ? where policyId = ?");
 				stmt.setInt(1, successfulRetweets + p.getNumber());
 				stmt.setInt(2, p.getPolicyId());
 				stmt.executeUpdate();

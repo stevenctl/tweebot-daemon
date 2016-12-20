@@ -19,8 +19,8 @@ import com.sugarware.tweebot.daemon.util.DatabaseUtil;
  */
 public class PerformLevelPoliciesTask implements Runnable {
 
-	private static final String COUNT_SUB_AT_LEVEL = "SELECT COUNT(*) FROM subscription WHERE subscription = ?";
-	private static final String GET_SUB_AT_LEVEL = "SELECT * FROM subscription WHERE subscription = ?";
+	private static final String COUNT_SUB_AT_LEVEL = "SELECT COUNT(*) FROM Subscription WHERE subscription = ?";
+	private static final String GET_SUB_AT_LEVEL = "SELECT * FROM Subscription WHERE subscription = ?";
 
 	// Run up to 8 users' tasks at a time
 	private static final int MAX_THREADS = 12;

@@ -29,7 +29,7 @@ public class PerformUserPoliciesTask implements Runnable {
 		try {
 			conn = DatabaseUtil.getConnection();
 
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM accesstoken WHERE userId = ?");
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM AccessToken WHERE userId = ?");
 			stmt.setLong(1, userId);
 			ResultSet rs = stmt.executeQuery();
 			rs.next();

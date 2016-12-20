@@ -41,7 +41,7 @@ public class Follows {
 		Properties props = PropertiesUtil.getInstance();
 		int follows = Integer.parseInt(props.getProperty("followsPerEvent"));
 		try {
-			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM followpolicy WHERE userId = ?");
+			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM FollowPolicy WHERE userId = ?");
 			stmt.setLong(1, userId);
 
 			Map<Policy, Integer> policies = new HashMap<>();
@@ -60,7 +60,7 @@ public class Follows {
 			// Try to fetch geopolicy
 			String location = null;
 
-			stmt = conn.prepareStatement("SELECT * FROM geopolicy WHERE userId = ?");
+			stmt = conn.prepareStatement("SELECT * FROM GeoPolicy WHERE userId = ?");
 			stmt.setLong(1, userId);
 			rs = stmt.executeQuery();
 
@@ -113,7 +113,7 @@ public class Follows {
 
 				// update the number of follows we've done for this policy
 				// overall
-				stmt = conn.prepareStatement("UPDATE followpolicy set follows = ? where policyId = ?");
+				stmt = conn.prepareStatement("UPDATE FollowPolicy set follows = ? where policyId = ?");
 				stmt.setInt(1, successfulFollows + p.getNumber());
 				stmt.setInt(2, p.getPolicyId());
 				stmt.executeUpdate();
