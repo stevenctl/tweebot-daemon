@@ -65,7 +65,7 @@ public class Retweets {
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				int zip = rs.getInt("zip");
+				int zip = rs.getInt("zipCode");
 				int radius = rs.getInt("radius");
 				location = geoService.getGeocode(zip, radius);
 			}
